@@ -6,7 +6,7 @@ import router from '@/router/index'
 
 const instance = axios.create({
    // baseURL: `http://localhost:8000/api/v1`, // for dev
-   baseURL: `https://dev.oceansheet.com/api/v1`, // for deploy
+   baseURL: `https://dev.organicvillage.ma/api/v1`, // for deploy
    // baseURL: `${process.env.VUE_APP_API_URL}/api/v1`, // for deploy
    withCredentials: true,
 });
