@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkdash_organicvillage"]=self["webpackChunkdash_organicvillage"]||[]).push([[547],{1547:function(a,e,s){s.r(e);const c={},l=c;e["default"]=l}}]);
+//# sourceMappingURL=547.52760ede.js.map

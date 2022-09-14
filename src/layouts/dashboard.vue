@@ -4,7 +4,7 @@
 
         <div class="flex flex-col flex-1">
             <Navigation @open-side-menu="isSideMenuOpen = !isSideMenuOpen" />
-            <div class="h-full overflow-y-auto">
+            <div class="h-full overflow-y-auto pb-12">
                 <router-view />
             </div>
         </div>
