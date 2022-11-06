@@ -9,3 +9,16 @@
       font-family: 'montserrat', system-ui, sans-serif;
     }
 }
+
+.form-input {
+  @apply mt-2 px-4 py-2 bg-gray-100 rounded-md;
+}
+.form-select {
+  @apply mt-2 px-2 py-2 bg-gray-100 rounded-md;
+}
+.form-multiselect {
+  @apply mt-2 px-2 py-2 bg-gray-100 rounded-md;
+}
+.form-textarea {
+  @apply mt-2 px-4 py-2 bg-gray-100 rounded-md;
+}

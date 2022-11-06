@@ -1,13 +1,13 @@
 import axios from '@/api/axios'
 
 const state = {
-  gammes: [],
+  orders: [],
   pagination: {},
 }
 
 const mutations = {
-  SET_GAMMES(state, gammes) {
-      state.gammes = gammes;
+  SET_ORDERS(state, orders) {
+      state.orders = orders;
   },
   SET_PAGINATION(state, pagination) {
       state.pagination = pagination;
@@ -15,10 +15,10 @@ const mutations = {
 }
 
 const actions = {
-  async fetchGammes(context, { page = 1, perPage = 5, search = '' }) {
-    return axios.get(`gammes/list?page=${page}&count=${perPage}&search=${search}`)
+  async fetchOrders(context, { page = 1, perPage = 5, search = '' }) {
+    return axios.get(`orders/list?page=${page}&count=${perPage}&search=${search}`)
       .then(res => {
-          context.commit('SET_GAMMES', res.data.data)
+          context.commit('SET_ORDERS', res.data.data)
           context.commit('SET_PAGINATION', {
             current_page: res.data.meta.current_page,
             last_page: res.data.meta.last_page,
@@ -32,8 +32,8 @@ const actions = {
           throw err;
       })
   },
-  async storeGamme({commit, dispatch, state}, data) {
-    return axios.post(`gammes/create`, data)
+  async updateOrder({commit, dispatch, state}, {slug, data}) {
+    return axios.put(`orders/${slug}/update`, data)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -43,8 +43,8 @@ const actions = {
         throw error
       })
   },
-  async updateGamme({commit, dispatch, state}, {slug, data}) {
-    return axios.put(`gammes/${slug}/update`, data)
+  async deleteOrder({commit, dispatch, state}, code) {
+    return axios.delete(`orders/${code}/delete`)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -54,8 +54,8 @@ const actions = {
         throw error
       })
   },
-  async deleteGamme({commit, dispatch, state}, slug) {
-    return axios.delete(`gammes/${slug}/delete`)
+  async acceptOrder({commit, dispatch, state}, code) {
+    return axios.put(`orders/${code}/set-accepted`)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -65,8 +65,8 @@ const actions = {
         throw error
       })
   },
-  async restoreGamme({commit, dispatch, state}, slug) {
-    return axios.post(`gammes/${slug}/restore`)
+  async declineOrder({commit, dispatch, state}, code) {
+    return axios.put(`orders/${code}/set-declined`)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -76,8 +76,30 @@ const actions = {
         throw error
       })
   },
-  async approveGamme({commit, dispatch, state}, slug) {
-    return axios.post(`gammes/${slug}/approve`)
+  async renewOrder({commit, dispatch, state}, code) {
+    return axios.put(`orders/${code}/set-new`)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  async deliveringOrder({commit, dispatch, state}, code) {
+    return axios.put(`orders/${code}/set-in-delivery`)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  async deliveredOrder({commit, dispatch, state}, code) {
+    return axios.put(`orders/${code}/set-delivered`)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -90,10 +112,10 @@ const actions = {
 };
 
 const getters = {
-  getGammes(state) {
-    return state.gammes;
+  getOrders(state) {
+    return state.orders;
   },
-  getGammesPagination(state) {
+  getOrdersPagination(state) {
     return state.pagination;
   },
 }

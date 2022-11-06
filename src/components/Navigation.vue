@@ -22,7 +22,7 @@
             </div>
             <form>
               <input ref="search"
-                class="w-full pl-8 pr-2 py-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-primary-300 focus:outline-none focus:shadow-outline-primary form-input"
+                class="w-full pr-2 py-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-primary-300 focus:outline-none focus:shadow-outline-primary pl-8"
                 type="text" placeholder="Search for projects" aria-label="Search" v-model="searchItem" />
             </form>
           </div>
@@ -69,6 +69,12 @@
                 <li class="flex">
                   <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
                     href="#">
+                    <span>Coming soon!</span>
+                  </a>
+                </li>
+                <!-- <li class="flex">
+                  <a class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                    href="#">
                     <span>Messages</span>
                     <span
                       class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600">
@@ -91,7 +97,7 @@
                     href="#">
                     <span>Alerts</span>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </template>
           </li>
@@ -110,19 +116,17 @@
                 class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                 aria-label="submenu">
                 <li class="flex">
-                  <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                    href="#">
+                  <router-link :to="{ name: 'profile' }" class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
                     <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
                       stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                       <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
                       </path>
                     </svg>
                     <span>Profile</span>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="flex">
-                  <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                    href="#">
+                  <router-link :to="{ name: 'settings.index' }" class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
                     <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
                       stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                       <path
@@ -131,11 +135,10 @@
                       <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                     <span>Settings</span>
-                  </a>
+                  </router-link>
                 </li>
                 <li class="flex">
-                  <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                    href="#">
+                  <button @click="logout" class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
                     <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
                       stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                       <path
@@ -143,7 +146,7 @@
                       </path>
                     </svg>
                     <span>Log out</span>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </template>
@@ -201,7 +204,7 @@
             }
         },
         async logout (){
-          await this.$store.dispatch('LogOut')
+          await this.$store.dispatch('logout')
           this.$router.push({ name: 'login' })
         }
     },

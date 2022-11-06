@@ -75,6 +75,27 @@ const actions = {
             throw err;
         }
     },
+    async updateAdminInformation(context, data) {
+        try {
+            let response = await axios.post('user/update/information', data)
+            context.commit('setUser', response.data.data)
+            return response.data.data;
+        }
+        catch (err) {
+            console.error(err)
+            throw err;
+        }
+    },
+    async updateAdminPassword(context, data) {
+        try {
+            let response = await axios.post('user/update/password', data)
+            return true;
+        }
+        catch (err) {
+            console.error(err)
+            throw err;
+        }
+    },
     async sendCode(context, email) {
         try {
             let response = await axios.post('reset-password/request', email)

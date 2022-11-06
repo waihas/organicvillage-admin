@@ -94,7 +94,7 @@ export default {
 
             try {
                 await this.$store.dispatch('login', User);
-                this.$router.push({ name: 'overview' });
+                this.$router.push(this.$route.query.redirect || { name: 'overview' });
                 this.loading = false;
             } catch (error) {
                 this.error['username'] = 'Username or password is incorrect.';

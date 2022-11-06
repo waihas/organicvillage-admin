@@ -1,79 +1,102 @@
 import axios from '@/api/axios'
 
 const state = {
-  post: {
-    postTitle: null,
-    tags: [],
-    postThumbnail: null,
-    article: {
-      articleTitle: null,
-      articleContent: [],
-    },
-    questions: [],
-    uploadedFile: null,
-    media: null,
-  },
-};
+  products: [],
+  pagination: {},
+}
 
 const mutations = {
-  updatePost(state, payload) {
-    state.post = { ...state.post, [payload.type]: payload.value };
+  SET_PRODUCTS(state, products) {
+      state.products = products;
   },
-  resetPost(state) {
-    state.post= {
-      postTitle: null,
-      tags: [],
-      postThumbnail: null,
-      article: {
-        articleTitle: null,
-        articleContent: [],
-      },
-      questions: [],
-      uploadedFile: null,
-      media: null,
-    }
+  SET_PAGINATION(state, pagination) {
+      state.pagination = pagination;
   }
-};
+}
 
 const actions = {
-  async storeArticle({commit, dispatch, state}, data) {
-      // validation
-      let error = ""
-      if (!state.post.postTitle) {
-        error = 'cím.'
-      } else if (!state.post.tags.length) {
-        error = 'témák.'
-      } else if (!state.post.questions.length) {
-        error = 'kérdések.'
-      }
-      if (error) {
-        dispatch('showMissingFieldAlert', error)
-        throw 'Hiányzik információ.'
-      }
-
-  },
-  quizFinished(state, uuid) {
-    axios.post(`articles/${uuid}/finished`)
-      .catch(error => {
-        console.error(error);
+  async fetchProducts(context, { page = 1, perPage = 5, search = '' }) {
+    return axios.get(`products/list?page=${page}&count=${perPage}&search=${search}`)
+      .then(res => {
+          context.commit('SET_PRODUCTS', res.data.data)
+          context.commit('SET_PAGINATION', {
+            current_page: res.data.meta.current_page,
+            last_page: res.data.meta.last_page,
+            per_page: res.data.meta.per_page,
+            from: res.data.meta.from,
+            to: res.data.meta.to,
+            total: res.data.meta.total,
+          });
+          return true;
+      }).catch(err => {
+          throw err;
       })
   },
-  articleDownloaded(state, uuid) {
-    axios.post(`articles/${uuid}/downloaded`)
-      .catch(error => {
-        console.error(error);
+  async storeProduct({commit, dispatch, state}, data) {
+    return axios.post(`products/create`, data)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
       })
-  }
+      .catch(error => {
+        throw error
+      })
+  },
+  async updateProduct({commit, dispatch, state}, {slug, data}) {
+    return axios.put(`products/${slug}/update`, data)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  async deleteProduct({commit, dispatch, state}, slug) {
+    return axios.delete(`products/${slug}/delete`)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  async restoreProduct({commit, dispatch, state}, slug) {
+    return axios.post(`products/${slug}/restore`)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+  async approveProduct({commit, dispatch, state}, slug) {
+    return axios.post(`products/${slug}/approve`)
+      .then((res) => {
+        if(res.data.success) {
+          return true;
+        }
+      })
+      .catch(error => {
+        throw error
+      })
+  },
 };
 
 const getters = {
-  post(state) {
-    return state.post;
+  getProducts(state) {
+    return state.products;
   },
-  uploadedFile(state) {
-    return state.uploadedFile;
+  getProductsPagination(state) {
+    return state.pagination;
   },
-};
+}
 
 export default {
   state,

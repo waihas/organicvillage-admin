@@ -62,7 +62,7 @@ const routes = [
     component: () => import('../views/Products/Create.vue'),
   },
   {
-    path: '/products/:id/edit',
+    path: '/products/:slug/edit',
     name: 'products.edit',
     meta: {
       title: 'Edit product',
@@ -72,7 +72,7 @@ const routes = [
     component: () => import('../views/Products/Edit.vue'),
   },
   {
-    path: '/products/:id/show',
+    path: '/products/:slug/show',
     name: 'products.show',
     meta: {
       title: 'Product',
@@ -103,7 +103,7 @@ const routes = [
     component: () => import('../views/Gammes/Create.vue'),
   },
   {
-    path: '/gammes/:id/edit',
+    path: '/gammes/:slug/edit',
     name: 'gammes.edit',
     meta: {
       title: 'Edit gamme',
@@ -113,7 +113,7 @@ const routes = [
     component: () => import('../views/Gammes/Edit.vue'),
   },
   {
-    path: '/gammes/:id/show',
+    path: '/gammes/:slug/show',
     name: 'gammes.show',
     meta: {
       title: 'Gamme',
@@ -134,7 +134,7 @@ const routes = [
     component: () => import('../views/Orders/Index.vue'),
   },
   {
-    path: '/orders/:id/show',
+    path: '/orders/:code/show',
     name: 'orders.show',
     meta: {
       title: 'Order',
@@ -144,7 +144,7 @@ const routes = [
     component: () => import('../views/Orders/Show.vue'),
   },
   {
-    path: '/orders/:id/edit',
+    path: '/orders/:code/edit',
     name: 'orders.edit',
     meta: {
       title: 'Edit order',
@@ -152,6 +152,17 @@ const routes = [
       layout: 'dashboard',
     },
     component: () => import('../views/Orders/Edit.vue'),
+  },
+  // tracking
+  {
+    path: '/tracking',
+    name: 'tracking.index',
+    meta: {
+      title: 'Tracking',
+      requiresAuth: true,
+      layout: 'dashboard'
+    },
+    component: () => import('../views/Tracking/Index.vue'),
   },
   // settings
   {
@@ -203,6 +214,48 @@ const routes = [
       layout: 'dashboard'
     },
     component: () => import('../views/Settings/SocialMedia.vue'),
+  },
+  // cities
+  {
+    path: '/settings/cities',
+    name: 'settings.cities.index',
+    meta: {
+      title: 'Cities',
+      requiresAuth: true,
+      layout: 'dashboard'
+    },
+    component: () => import('../views/Settings/City/Index.vue'),
+  },
+  {
+    path: '/settings/cities/create',
+    name: 'settings.cities.create',
+    meta: {
+      title: 'Add a city',
+      requiresAuth: true,
+      layout: 'dashboard'
+    },
+    component: () => import('../views/Settings/City/Create.vue'),
+  },
+  {
+    path: '/settings/cities/:uuid/edit',
+    name: 'settings.cities.edit',
+    meta: {
+      title: 'Edit city',
+      requiresAuth: true,
+      layout: 'dashboard'
+    },
+    component: () => import('../views/Settings/City/Edit.vue'),
+  },
+  // profile
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: {
+      title: 'Profile',
+      requiresAuth: true,
+      layout: 'dashboard'
+    },
+    component: () => import('../views/Profile.vue'),
   },
   // not found
   {

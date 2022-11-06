@@ -1,13 +1,13 @@
 import axios from '@/api/axios'
 
 const state = {
-  gammes: [],
+  cities: [],
   pagination: {},
 }
 
 const mutations = {
-  SET_GAMMES(state, gammes) {
-      state.gammes = gammes;
+  SET_CITIES(state, cities) {
+      state.cities = cities;
   },
   SET_PAGINATION(state, pagination) {
       state.pagination = pagination;
@@ -15,10 +15,10 @@ const mutations = {
 }
 
 const actions = {
-  async fetchGammes(context, { page = 1, perPage = 5, search = '' }) {
-    return axios.get(`gammes/list?page=${page}&count=${perPage}&search=${search}`)
+  async fetchCities(context, { page = 1, perPage = 5, search = '' }) {
+    return axios.get(`cities/list?page=${page}&count=${perPage}&search=${search}`)
       .then(res => {
-          context.commit('SET_GAMMES', res.data.data)
+          context.commit('SET_CITIES', res.data.data)
           context.commit('SET_PAGINATION', {
             current_page: res.data.meta.current_page,
             last_page: res.data.meta.last_page,
@@ -32,8 +32,8 @@ const actions = {
           throw err;
       })
   },
-  async storeGamme({commit, dispatch, state}, data) {
-    return axios.post(`gammes/create`, data)
+  async storeCity({commit, dispatch, state}, data) {
+    return axios.post(`cities/create`, data)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -43,8 +43,8 @@ const actions = {
         throw error
       })
   },
-  async updateGamme({commit, dispatch, state}, {slug, data}) {
-    return axios.put(`gammes/${slug}/update`, data)
+  async updateCity({commit, dispatch, state}, {uuid, data}) {
+    return axios.put(`cities/${uuid}/update`, data)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -54,30 +54,8 @@ const actions = {
         throw error
       })
   },
-  async deleteGamme({commit, dispatch, state}, slug) {
-    return axios.delete(`gammes/${slug}/delete`)
-      .then((res) => {
-        if(res.data.success) {
-          return true;
-        }
-      })
-      .catch(error => {
-        throw error
-      })
-  },
-  async restoreGamme({commit, dispatch, state}, slug) {
-    return axios.post(`gammes/${slug}/restore`)
-      .then((res) => {
-        if(res.data.success) {
-          return true;
-        }
-      })
-      .catch(error => {
-        throw error
-      })
-  },
-  async approveGamme({commit, dispatch, state}, slug) {
-    return axios.post(`gammes/${slug}/approve`)
+  async deleteCity({commit, dispatch, state}, uuid) {
+    return axios.delete(`cities/${uuid}/delete`)
       .then((res) => {
         if(res.data.success) {
           return true;
@@ -90,10 +68,10 @@ const actions = {
 };
 
 const getters = {
-  getGammes(state) {
-    return state.gammes;
+  getCities(state) {
+    return state.cities;
   },
-  getGammesPagination(state) {
+  getCitiesPagination(state) {
     return state.pagination;
   },
 }

@@ -1,6 +1,8 @@
 import product from './modules/product';
 import auth from './modules/auth';
 import gamme from './modules/gamme';
+import order from './modules/order';
+import city from './modules/city';
 import { createStore } from 'vuex';
 
 export default createStore({
@@ -10,6 +12,8 @@ export default createStore({
   modules: {
     product,
     auth,
-    gamme
+    gamme,
+    order,
+    city
   },
 });
